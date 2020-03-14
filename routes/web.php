@@ -25,6 +25,10 @@ Route::group(array('namespace' => 'Administrator\v1','middleware' => ['sentinel.
   Route::get('/', 'DashboardController@index')->name('user.dashboard');
   Route::get('logout', 'UserController@logout')->name('user.logout');
 
+  //enrollment
+  Route::get('enrollment', 'EnrollmentController@enrollment')->name('enrollment');
+  Route::get('new-enrollment', 'EnrollmentController@newEnrollment')->name('new.enrollment');
+
 
   //profile
   Route::get('profile', 'UserController@profile')->name('profile');

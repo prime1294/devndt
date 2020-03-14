@@ -42,6 +42,11 @@ $role = Sentinel::findRoleById($user->id);
       </a>
     </li>
     <li>
+      <a href="{{ route('profile') }}">
+        <i class="fa fa-file-text"></i> <span>Enrollment</span>
+      </a>
+    </li>
+    <li>
       <a href="{{ route('user.logout') }}">
         <i class="fa fa-sign-out"></i> <span>Logout</span>
       </a>
