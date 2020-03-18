@@ -22,6 +22,9 @@
   font-size: 28px;
   font-weight: bolder;
 }
+  .whatsapp_contact .input-group-addon {
+    padding: 2px 7px;
+  }
 </style>
 
 
@@ -71,25 +74,25 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <h3 class="page-header">Personal Detail</h3>
+              <h3 class="page-header">Personal Details</h3>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="name">Full Name (Front)</label>
+                <label for="name">Name (Front)</label>
                 <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-1">
                   <select id="f_greet" name="f_greet" value="" class="form-control">
                     <option value="MR">MR</option>
                     <option value="MS">MS</option>
                     <option value="MISS">MISS</option>
                   </select>
                 </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                   <input type="text" id="f_fname" name="f_fname" placeholder="First Name" value="" class="form-control">
                 </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                   <input type="text" id="f_mname" name="f_mname" placeholder="Middle Name" value="" class="form-control">
                 </div>
                   <div class="col-md-3">
@@ -101,62 +104,93 @@
           </div>
 
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="form-group">
-                <label for="b_name">Certificate Name (Back)</label>
-                <input type="text" id="b_name" name="b_name" placeholder="Full Name" value="" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="father_name">Father Name</label>
-                <input type="text" id="father_name" name="father_name" placeholder="Father Name" value="" class="form-control">
+                <label for="name">Name (Back)</label>
+                <div class="row">
+                <div class="col-md-1">
+                  <select id="f_greet" name="f_greet" value="" class="form-control">
+                    <option value="MR">MR</option>
+                    <option value="MS">MS</option>
+                    <option value="MISS">MISS</option>
+                  </select>
+                </div>
+                  <div class="col-md-4">
+                  <input type="text" id="f_fname" name="f_fname" placeholder="First Name" value="" class="form-control">
+                </div>
+                  <div class="col-md-4">
+                  <input type="text" id="f_mname" name="f_mname" placeholder="Middle Name" value="" class="form-control">
+                </div>
+                  <div class="col-md-3">
+                  <input type="text" id="f_lname" name="f_lname" placeholder="Last Name" value="" class="form-control">
+                </div>
+                </div>
               </div>
             </div>
           </div>
 
 
           <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="name">Father Name</label>
+                <div class="row">
+                  <div class="col-md-1">
+                    <select id="f_greet" name="f_greet" disabled value="" class="form-control">
+                      <option value="MR">MR</option>
+                      <option value="MS">MS</option>
+                      <option value="MISS">MISS</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                  <input type="text" id="f_fname" name="f_fname" placeholder="First Name" value="" class="form-control">
+                </div>
+                  <div class="col-md-4">
+                  <input type="text" id="f_mname" name="f_mname" placeholder="Middle Name" value="" class="form-control">
+                </div>
+                  <div class="col-md-3">
+                  <input type="text" id="f_lname" name="f_lname" placeholder="Last Name" value="" class="form-control">
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-2">
               <div class="form-group">
                 <label for="dob">Date of Birth</label>
                 <input type="text" id="dob" name="dob"  class="form-control datepicker">
               </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-1">
               <div class="form-group">
-                <label for="age">Age From Current Date</label>
+                <label for="age">Age</label>
                 <input type="text" id="age" name="age" placeholder="Age" readonly class="form-control">
               </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg-6 whatsapp_contact">
               <div class="form-group">
                 <label for="contact">Contact</label>
-                <input type="text" id="contact" name="contact" placeholder="Contact" class="form-control">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <input type="checkbox" id="is_whatsapp" name="is_whatsapp">
+                </span>
+                <input type="text" id="contact" name="contact" placeholder="+91 XXXXXXXXXX" class="form-control">
+              </div>
               </div>
             </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="alt_contact">Alt Contact</label>
-                <input type="text" id="alt_contact" name="alt_contact" placeholder="Alt Contact" class="form-control">
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
             <div class="col-md-3">
               <div class="form-group">
                 <label for="email">Email</label>
                 <input type="text" id="email" name="email" placeholder="your@email.com" value="" class="form-control">
               </div>
             </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="alt_email">Alt Email</label>
-                <input type="text" id="alt_email" name="alt_email" placeholder="your@email.com" value="" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-6">
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
               <div class="form-group">
                 <label for="address">Permanent Address</label>
                 <input type="text" id="address" name="address" placeholder="Address" value="" class="form-control">
@@ -192,129 +226,90 @@
           </div>
 
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
               <div class="form-group">
                 <label for="education">Educational Qualification</label>
-                <input type="text" id="education" name="education" placeholder="MSC, BSC ..." value="" class="form-control">
+                <select id="education" name="education" data-placeholder="MSC, BSC ..." value="" multiple style="width: 100%;" class="form-control select2">
+                  @foreach($education as $row)
+                    <option value="{{ $row->id }}">{{ $row->name }}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div class="form-group">
                 <label for="year_of_complete">Year of Completion</label>
                 <input type="text" id="year_of_complete" name="year_of_complete" placeholder="Year" value="" class="form-control">
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div class="form-group">
-                <label for="experience">Experience in NDT Field (in year)</label>
+                <label for="experience">Experience in NDT Field (in years)</label>
                 <input type="text" id="experience" name="experience" placeholder="5" value="" class="form-control">
               </div>
             </div>
           </div>
 
           <div class="row">
-            <div class="col-md-12">
-            <h3 class="page-header">Company Detail</h3>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3 class="page-header">Company Details</h3>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="company_name">Company Name</label>
+                      <select style="width: 100%;" id="company_name" name="company_name" class="form-control select2-bank" data-placeholder="Select Company">
+                        <option value="">Select Company</option>
+                        <option data-img="{{ 'plus.png' }}" value="0">Add New</option>
+                        @foreach($company_list as $row)
+                          <option value="{{ $row->id }}">{{ ucwords($row->company_name).' - '.ucwords($row->company_type) }}</option>
+                        @endforeach
+                      </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3 class="page-header">Reference Details</h3>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="ref_name">Reference Name</label>
+                    <select style="width: 100%;" id="ref_name" name="ref_name" class="form-control select2-bank" data-placeholder="Select Reference Name">
+                      <option value="">Select Reference Name</option>
+                      <option data-img="{{ 'plus.png' }}" value="0">Add New</option>
+                      @foreach($ref_list as $row)
+                        <option value="{{ $row->id }}">{{ ucwords($row->fname).' '.ucwords($row->lname) }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="company_name">Company Name</label>
-                <input type="text" id="company_name" name="company_name" placeholder="Company Name" value="" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="company_address">Company Address</label>
-                <input type="text" id="company_address" name="company_address" placeholder="Company Address" value="" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="company_mobile">Company Contact</label>
-                <input type="text" id="company_mobile" name="company_mobile" placeholder="+91 XXXXXXXX" value="" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="company_email">Company Email</label>
-                <input type="text" id="company_email" name="company_email" placeholder="your@email.com" value="" class="form-control">
-              </div>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="company_city">City</label>
-                <input type="text" id="company_city" name="company_city" placeholder="Ahmedabad" value="" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="company_district">District</label>
-                <input type="text" id="company_district" name="company_district" placeholder="Ahmedabad" value="" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label for="company_state">State</label>
-                <input type="text" id="company_state" name="company_state" placeholder="Gujarat" value="" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label for="company_pincode">Pincode</label>
-                <input type="text" id="company_pincode" name="company_pincode" placeholder="3823**" value="" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label for="holiday">Weelky Off (In Days)</label>
-                <input type="text" id="holiday" name="holiday" placeholder="2" value="" class="form-control">
-              </div>
-            </div>
-          </div>
+
+
+
+
+
+
+
+
 
 
           <div class="row">
             <div class="col-md-12">
-              <h3 class="page-header">Referenced Detail</h3>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="ref_name">Name</label>
-                <input type="text" id="ref_name" name="ref_name" placeholder="Name" value="" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="ref_contact">Contact</label>
-                <input type="text" id="ref_contact" name="ref_contact" placeholder="Contact" value="" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="ref_email">Email</label>
-                <input type="text" id="ref_email" name="ref_email" placeholder="Email" value="" class="form-control">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="ref_company">Company Name</label>
-                <input type="text" id="ref_company" name="ref_company" placeholder="Company Name" value="" class="form-control">
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-12">
-              <h3 class="page-header">Fees Detail</h3>
+              <h3 class="page-header">Fees Details</h3>
             </div>
           </div>
 
@@ -347,7 +342,7 @@
 
           <div class="row">
             <div class="col-md-12">
-              <h3 class="page-header">Other Detail</h3>
+              <h3 class="page-header">Other Details</h3>
             </div>
           </div>
 
@@ -387,11 +382,24 @@
 <div class="ripple"></div>
 </div>
 
-
+@include('admin.v1.enrollment.add_company');
+@include('admin.v1.enrollment.reference');
 
 <script type="text/javascript">
 $(document).ready(function(e){
   initdatepicker(true);
+});
+
+$(document).on("change","#company_name",function(e) {
+  if($(this).val() == 0) {
+    $("#addCompanyModel").modal('show');
+  }
+});
+
+$(document).on("change","#ref_name",function(e) {
+  if($(this).val() == 0) {
+    $("#addReferenceModel").modal('show');
+  }
 });
 
 $(function () {

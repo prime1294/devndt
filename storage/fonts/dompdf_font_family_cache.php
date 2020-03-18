@@ -78,6 +78,6 @@
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
   'hind vadodara' => array(
-    'normal' => $fontDir . '/hind-vadodara-normal_724f9792c194fa8f3fd08a71c0066687',
+    'normal' => $fontDir . '/hind-vadodara-normal_1131ca73acd96dd4dd66ff070e1b36a3',
   ),
 ) ?>

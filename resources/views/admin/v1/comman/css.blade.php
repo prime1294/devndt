@@ -46,6 +46,9 @@
 <![endif]-->
 
 <style type="text/css">
+    .datepicker {
+        padding: 6px 12px;
+    }
     .ui-widget.ui-widget-content
     {
         border: none;

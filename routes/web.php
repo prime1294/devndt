@@ -28,6 +28,12 @@ Route::group(array('namespace' => 'Administrator\v1','middleware' => ['sentinel.
   //enrollment
   Route::get('enrollment', 'EnrollmentController@enrollment')->name('enrollment');
   Route::get('new-enrollment', 'EnrollmentController@newEnrollment')->name('new.enrollment');
+  Route::get('ajax-enrollment', 'EnrollmentController@enrollmentListAjax')->name('enrollment.list.ajax');
+  Route::get('download-enrollment', 'EnrollmentController@enrollmentPdf')->name('enrollment.pdf');
+
+  //vision
+  Route::get('vision', 'CertificateController@vision')->name('vision');
+  Route::get('new-vision', 'CertificateController@newVision')->name('new.vision');
 
 
   //profile
