@@ -34,6 +34,7 @@ Route::group(array('namespace' => 'Administrator\v1','middleware' => ['sentinel.
   //vision
   Route::get('vision', 'CertificateController@vision')->name('vision');
   Route::get('new-vision', 'CertificateController@newVision')->name('new.vision');
+    Route::get('download-vision', 'CertificateController@visionPdf')->name('vision.pdf');
 
 
   //profile

@@ -23,4 +23,12 @@ class CertificateController extends Controller
         $data = [];
         return view('admin.v1.certificate.new',$data);
     }
+
+    public function visionPdf(Request $request) {
+        $user = Sentinel::getUser();
+        $data = [];
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('admin.v1.certificate.pdf', $data);
+        return $pdf->stream('vision'.rand(3000,4000).'.pdf');
+    }
 }

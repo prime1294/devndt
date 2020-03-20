@@ -259,7 +259,7 @@
               </div>
 
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-8">
                   <div class="form-group">
                     <label for="company_name">Company Name</label>
                       <select style="width: 100%;" id="company_name" name="company_name" class="form-control select2-bank" data-placeholder="Select Company">
@@ -269,6 +269,20 @@
                           <option value="{{ $row->id }}">{{ ucwords($row->company_name).' - '.ucwords($row->company_type) }}</option>
                         @endforeach
                       </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="designation">Designation</label>
+                    <select  style="width: 100%;" id="designation" name="designation" class="form-control select2">
+                      <option value="">Select Designation</option>
+                      <option value="Proprietor">Proprietor</option>
+                      <option value="Director">Director</option>
+                      <option value="Manager">Manager</option>
+                      <option value="Engineer">Engineer</option>
+                      <option value="Q.C.Manager">Q.C.Manager</option>
+                      <option value="H.R.Manager">H.R.Manager</option>
+                    </select>
                   </div>
                 </div>
               </div>

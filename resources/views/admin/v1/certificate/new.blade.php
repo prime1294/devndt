@@ -47,12 +47,9 @@
         <form method="post" action="{{ route('delivery.challan.register') }}" enctype="multipart/form-data">
           {!! csrf_field() !!}
           <div class="row">
-            <div class="col-md-10">
-              <div class="enrollment_title">Certificate No: 3526</div>
-            </div>
             <div class="col-md-2">
               <div class="form-group">
-                <label for="dev_ndt_id">Dev Ndt Id</label>
+                <label for="dev_ndt_id">Dev NDT ID</label>
                 <select  style="width: 100%;" id="dev_ndt_id" name="dev_ndt_id  " class="form-control select2">
                   <option value="">Find By Id</option>
                   <option value="3939">3939</option>
@@ -62,19 +59,40 @@
                 </select>
               </div>
             </div>
+            <div class="col-md-10">
+
+            </div>
           </div>
 
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="add_company_no">Company No.</label>
+                <select  style="width: 100%;" id="add_company_no" name="add_company_no" class="form-control select2">
+                  <option value="">Find By Id</option>
+                  <option value="3939">3939</option>
+                  <option value="3940">3940</option>
+                  <option value="3950">3950</option>
+                  <option value="3951">3951</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="company_name">Company Name</label>
                 <input type="text" id="company_name" name="company_name" placeholder="Company Name" value="" class="form-control">
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div class="form-group">
-                <label for="certificate_date">Certificate Date</label>
+                <label for="certificate_date">Issue Date</label>
                 <input type="text" id="certificate_date" name="certificate_date"  class="form-control datepicker">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="certificate_date">Expiration Date</label>
+                <input type="text" id="certificate_date" name="certificate_date"  readonly class="form-control">
               </div>
             </div>
           </div>
@@ -115,15 +133,19 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
+                    <label class="lbl1">Spectacles <input type="checkbox" id="method" name="spectacles[]" value="spectacles" class="form-control"></label>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
                     <label class="lbl1">J1 <input type="radio" id="method" name="j[]" checked value="j1" class="form-control"></label>
                     <label class="lbl1">J2 <input type="radio" id="method" name="j[]" value="j2" class="form-control"></label>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="lbl1">Red <input type="checkbox" id="method" name="method[]" checked value="j1" class="form-control"></label>
-                    <label class="lbl1">Green <input type="checkbox" id="method" name="method[]" checked value="j2" class="form-control"></label>
-                    <label class="lbl1">Blue <input type="checkbox" id="method" name="method[]" checked value="j2" class="form-control"></label>
+                    <label class="lbl1">Ok <input type="radio" id="method" name="method[]" checked value="j1" class="form-control"></label>
+                    <label class="lbl1">Not OK <input type="radio" id="method" name="method[]" value="j2" class="form-control"></label>
                   </div>
                 </div>
               </div>
@@ -137,8 +159,8 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="lbl1">Approve <input type="radio" id="cv_yes" name="cv[]" checked value="yes" class="form-control"></label>
-                    <label class="lbl1">Not Approve <input type="radio" id="cv_no" name="cv[]" value="no" class="form-control"></label>
+                    <label class="lbl1">OK <input type="radio" id="cv_yes" name="cv[]" checked value="yes" class="form-control"></label>
+                    <label class="lbl1">Not OK <input type="radio" id="cv_no" name="cv[]" value="no" class="form-control"></label>
                   </div>
                 </div>
                 <div class="col-md-12 hideme">
@@ -153,7 +175,7 @@
 
           <div class="form-devider"></div>
           <div class="form-group">
-          <button type="submit" class="btn btn-primary" onclick="return val_add_party();"><i class="fa fa-plus"></i> Save</button>
+          <button type="submit" class="btn btn-primary" onclick="return val_add_party();"><i class="fa fa-plus"></i> Renew & Save</button>
           </div>
           </form>
       </div>
