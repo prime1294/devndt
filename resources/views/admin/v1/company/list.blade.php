@@ -1,4 +1,4 @@
-@extends('admin.v1.layout.app', ['title' => 'Enrollment'])
+@extends('admin.v1.layout.app', ['title' => 'Company'])
 
 @section('content')
 <style type="text/css">
@@ -11,12 +11,12 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    <i class="fa fa-file-text"></i> Enrollment
-    <small>Enrollment List</small>
+    <i class="fa fa-university"></i> Company
+    <small>Company List</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{ route('user.dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Enrollment</li>
+    <li class="active">Company</li>
 
   </ol>
 </section>
@@ -31,10 +31,10 @@
             <thead>
             <tr>
               <th data-orderable="false"></th>
-              <th data-orderable="false">Information</th>
-              <th data-orderable="false">Method</th>
-              <th data-orderable="false">Contact</th>
-              <th data-orderable="false">Company / Ref</th>
+              <th data-orderable="false">Company Info</th>
+              <th data-orderable="false">Company Contact</th>
+              <th data-orderable="false">Company Address</th>
+              <th data-orderable="false">Contact Person</th>
               <th data-orderable="false">Action</th>
             </tr>
             </thead>
@@ -49,12 +49,6 @@
   </div>
 </section>
 
-<div class="buy-now">
-<a href="{{ route('new.enrollment') }}" class="btn btn-primary buy-now-btn">
-<i class="fa fa-plus" aria-hidden="true"></i>
-</a>
-<div class="ripple"></div>
-</div>
 
 <script type="text/javascript">
   var selected = [];
@@ -64,13 +58,14 @@ $(document).ready(function(e){
 
 var dtable_lang = {
   search: "_INPUT_",
-  searchPlaceholder: "Search Enrollment"
+  searchPlaceholder: "Search Company"
 };
 $.extend( $.fn.dataTableExt.oStdClasses, {
   "sFilterInput": "form-control",
   "sLengthSelect": "form-control"
 });
 $(document).ready(function() {
+
   table = $('.dtable').DataTable({
     "dataSrc": "Data",
     "dom": '<"pull-left"f><"pull-right"l>tip',
@@ -78,16 +73,16 @@ $(document).ready(function() {
     "processing" : true,
     "serverSide" : true,
     "order" : [],
-    "ajax" : "{{ route('enrollment.list.ajax') }}",
+    "ajax" : "{{ route('company.list.ajax') }}",
     "bLengthChange": false,
     "bAutoWidth": false,
-    "pageLength": 100,
+    // "pageLength": 100,
     "columns" : [
       {"data":"check","sWidth": "3%"},
-      {"data":"user_info","sWidth": "25%"},
-      {"data":"certificate_info","sWidth": "21%"},
-      {"data":"contact_info","sWidth": "16%"},
-      {"data":"other_info","sWidth": "20%"},
+      {"data":"company_info","sWidth": "24%"},
+      {"data":"company_contact","sWidth": "15%"},
+      {"data":"company_address","sWidth": "24%"},
+      {"data":"contact_person","sWidth": "19%"},
       {"data":"action","sWidth": "15%", "searchable": false , "orderable": false},
     ],
     "fnDrawCallback": function() {

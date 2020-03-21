@@ -60,6 +60,16 @@ class EnrollmentController extends Controller
             array_push($enrollment,$child);
         }
         return DataTables::of($enrollment)
+        ->addColumn('check', function ($enrollment) {
+            $html = '';
+            $html .= '<input type="checkbox" id="chk_'.$enrollment['id'].'" class="chkbox" name="selected_users[]" value="'.$enrollment['id'].'">';
+            return $html;
+        })
+        ->addColumn('check_id', function ($enrollment) {
+            $html = '';
+            $html .= 'chk_'.$enrollment['id'];
+            return $html;
+        })
         ->addColumn('user_info', function ($enrollment) {
             $html = '';
             $html .= '<img src="'.asset($enrollment['photo']).'" alt="'.$enrollment['name'].'" class="img-circle img-responsive" style="display:inline-block;vertical-align:top;" width="40"> <span style="display: inline-block;margin-left:5px;">'.$enrollment['id'].'<br><span class="text-muted">'.$enrollment['name'].'</span></span>';
@@ -83,7 +93,7 @@ class EnrollmentController extends Controller
             $html .= ' <a href="'.route('enrollment.pdf').'" target="_blank" class="btn btn-info btn-xs"><i class="fa fa-file-pdf-o"></i> Download</a>';
             return $html;
         })
-        ->rawColumns(['user_info','certificate_info','contact_info','other_info', 'action'])
+        ->rawColumns(['check','user_info','certificate_info','contact_info','other_info', 'action'])
         ->make(true);
     }
 }

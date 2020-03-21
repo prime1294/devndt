@@ -35,6 +35,7 @@ $user = Sentinel::check();
     body {
         margin: 0px;
         padding: 20px;
+        padding-bottom: 0px;
         background:#FFFFFF;
 
     }
@@ -90,6 +91,9 @@ $user = Sentinel::check();
     .ptop-10 {
         padding-top: 10px;
     }
+    .ptop-15 {
+        padding-top: 18px;
+    }
     .ptop-20 {
         padding-top: 20px;
     }
@@ -120,6 +124,7 @@ $user = Sentinel::check();
     }
     .primetbl tr td {
         padding: 5px;
+        font-size: 15px;
     }
     .pendrive_no {
         color: #3f51b5;
@@ -212,11 +217,11 @@ $user = Sentinel::check();
         color: red;
     }
     ul {
-        list-style-image: url('{{ asset('image/logo/bullet.png') }}');
+        {{--list-style-image: url('{{ asset('image/logo/bullet.png') }}');--}}
         padding: 0;
         padding-left: 20px;
         padding-right: 10px;
-        font-size: 14px;
+        font-size: 15px;
     }
     ol {
         counter-reset: list;
@@ -264,41 +269,41 @@ $user = Sentinel::check();
         </tr>
     </table>
 </div>
-<div class="information customp ptop-20">
-    <table border="1px" width="100%" style="border-collapse: collapse; border: none; text-align: center;">
+<div class="information customp">
+    <table width="100%" style="border-collapse: collapse; border: none; text-align: center;">
         <tr>
             <td><p class="certificate_name h_address">VISION ACUITY RECORD</p></td>
         </tr>
     </table>
 </div>
-<div class="information customp ptop-10">
+<div class="information customp">
     <table border="1px" width="100%" style="border-collapse: collapse; border: none; text-align: center; font-weight: bold; font-size: 15px;">
         <tr>
-            <td width="20%;">APPLICANT ID No.</td>
-            <td width="40%;">APPLICANT NAME</td>
+            <td width="20%;">Applicant ID No.</td>
+            <td width="40%;">Applicant Name</td>
             <td width="20%;">Issue Date</td>
             <td width="20%;">Expiration Date</td>
         </tr>
         <tr>
-            <td><p class="txt_red">1410</p></td>
-            <td><p class="txt_red">Mr. Aamir Vhora</p></td>
+            <td><p class="txt_red" style="font-size: 24px;">1410</p></td>
+            <td><p class="txt_red">Mr. Aamir Vhora<br>(Anup Engineering)</p></td>
             <td><p class="txt_red">07/04/2018</p></td>
             <td><p class="txt_red">07/04/2019</p></td>
         </tr>
     </table>
 </div>
-<div class="information customp ptop-10">
-    <table border="1px" width="100%" style="border-collapse: collapse; border: none; text-align: center; font-weight: bold; font-size: 15px;">
-        <tr>
-            <td width="50%">Anup Engineering</td>
-            <td width="50%">Ahmedabad</td>
-        </tr>
-    </table>
-</div>
+{{--<div class="information customp ptop-10">--}}
+{{--    <table border="1px" width="100%" style="border-collapse: collapse; border: none; text-align: center; font-weight: bold; font-size: 15px;">--}}
+{{--        <tr>--}}
+{{--            <td width="50%">Anup Engineering</td>--}}
+{{--            <td width="50%">Ahmedabad</td>--}}
+{{--        </tr>--}}
+{{--    </table>--}}
+{{--</div>--}}
 <div class="information customp ptop-10">
     <table border="1px" width="100%" style="border-collapse: collapse; border: none; text-align: center;">
         <tr>
-            <td><p class="txt_red" style="font-size: 16px; font-weight: bolder;">Requirements : </p></td>
+            <td><p class="txt_red" style="font-size: 16px; font-weight: bolder;">REQUIREMENTS</p></td>
         </tr>
     </table>
 </div>
@@ -309,36 +314,32 @@ $user = Sentinel::check();
                 <ul>
                     <li>Applicant is required to pass an eye examination,with or without eye correction to prove
                         <ol>
-                            <li>Near Vision on Jaeger Chart or equilent at 12 inches</li>
+                            <li>Near Vision on Jaeger Chart or equivalent at 12 inches</li>
                             <li>Color Perception on Ishiara Eye Chart for Red/ Green and Blue/ Yellow differentiation.</li>
                             <li>Gray shades on Gray Shade Chart</li>
                         </ol>
                     </li>
                     <li>This should be administered annually accordance with ASNT SNT TC-1A.</li>
                     <li>The eye examination must be administered by an NDT Level III, Optometrist, Medical Doctor, Registered Nurse or Certified Physician’s Assistant.</li>
-                    <li>Do not alter the  printed test  requirements.</li>
-                    <li>Do not add any medical terminology.</li>
-                    <li>Check only one box per test.</li>
-                    <li>Visual acuity Records which  do not comply with above requirements will not be accepted.</li>
+                    <li>Do not alter the  printed test  requirements. Do not add any medical terminology. Check only one box per test.</li>
+                    <li>Visual Acuity Records which  do not comply with above requirements will not be accepted.</li>
                 </ul>
             </td>
         </tr>
     </table>
 </div>
-<div class="information customp ptop-5">
+<div class="information customp">
     <table border="1px" width="100%" style="border-collapse: collapse; border: none; text-align: center;">
         <tr>
-            <td><p class="txt_red" style="font-size: 16px; font-weight: bolder;">Test Results : </p></td>
+            <td><p class="txt_red" style="font-size: 16px; font-weight: bolder;">TEST RESULTS</p></td>
         </tr>
     </table>
 </div>
 <div class="information customp ptop-5 primetbl">
     <table width="100%" style="border-collapse: collapse; border: none;">
+
         <tr>
-            <td valign="top" style="padding: 0px;" colspan="4"><p class="oth_tbl_p">TESTS</p></td>
-        </tr>
-        <tr>
-            <td valign="bottom"><p class="oth_tbl_p">1. Near distance vision</p></td>
+            <td valign="bottom"><p class="oth_tbl_p">1. Near Vision<br><span class="plsep" style="font-weight: normal !important;">For testing used Jaeger Chart</span></p></td>
             <td valign="top" align="center">Meets without<br>Eye correction</td>
             <td valign="top" align="center">Meets with<br>Eye correction</td>
             <td valign="top" align="center">Does not meet</td>
@@ -366,8 +367,8 @@ $user = Sentinel::check();
             <td colspan="3" style="padding: 0px; padding-left: 5px;"><p class="oth_tbl_p" style="padding: 0px;">2.	Color Vision</p></td>
         </tr>
         <tr>
-            <td valign="top"><span class="plsep">For testing used</span> </td>
-            <td align="center"  valign="top">Meets</td>
+            <td width="59%" valign="top"><span class="plsep">For testing used</span> </td>
+            <td width="22%" align="center"  valign="top">Meets</td>
             <td align="center" valign="top">Does not meet</td>
         </tr>
         <tr>
@@ -376,12 +377,29 @@ $user = Sentinel::check();
             <td align="center"><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize" alt="checkbox"/></td>
         </tr>
         <tr>
-            <td><span class="plsep">Red/green differentiation</span></td>
+            <td><span class="plsep">Red / Green differentiation</span></td>
             <td align="center"><img src="{{ asset('image/logo/done.png') }}" class="chksize" alt="checkbox"/></td>
             <td align="center"><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize" alt="checkbox"/></td>
         </tr>
         <tr>
-            <td><span class="plsep">Blue/ yellow differentiation</span></td>
+            <td><span class="plsep">Blue/ Yellow differentiation</span></td>
+            <td align="center"><img src="{{ asset('image/logo/done.png') }}" class="chksize" alt="checkbox"/></td>
+            <td align="center"><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize" alt="checkbox"/></td>
+        </tr>
+    </table>
+</div>
+<div class="information customp ptop-5 primetbl">
+    <table width="100%" style="border-collapse: collapse; border: none;">
+        <tr>
+            <td colspan="3" style="padding: 0px; padding-left: 5px;"><p class="oth_tbl_p" style="padding: 0px;">3.	Gray Shades</p></td>
+        </tr>
+        <tr>
+            <td width="59%" valign="top"><span class="plsep">For testing used</span> </td>
+            <td width="22%" align="center"  valign="top">Meets</td>
+            <td align="center" valign="top">Does not meet</td>
+        </tr>
+        <tr>
+            <td><img src="{{ asset('image/logo/done.png') }}" class="chksize plsep" style="margin-top:1px; display: inline-block;"  alt="checkbox"/> <span style="display: inline-block;" class="oth_tbl_p">Gray Shade Chart</span></td>
             <td align="center"><img src="{{ asset('image/logo/done.png') }}" class="chksize" alt="checkbox"/></td>
             <td align="center"><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize" alt="checkbox"/></td>
         </tr>
@@ -391,8 +409,8 @@ $user = Sentinel::check();
     <table width="100%" style="border-collapse: collapse; border: none;">
         <tr>
             <td>
-                <p class="">This is to certify that I, <u><b>BALDEV PATEL</b></u>  Administrated an eye exam to  <b>Mr. Aamir Vhora</b> on <b>07/04/2018</b></p>
-                <p class="">who demonstrated the vision capabilities indicated above . Check one of the following:-</p>
+                <p class="">This is to certify that I, <u><b>BALDEV PATEL</b></u>  administrated an eye exam to  <b>Mr. Aamir Vhora</b> on <b>07/04/2018</b></p>
+                <p class="">who has demonstrated the vision capabilities indicated above . Check one of the following:-</p>
             </td>
         </tr>
     </table>
@@ -401,12 +419,12 @@ $user = Sentinel::check();
     <table width="100%" style="border-collapse: collapse; border: none;">
         <tr>
             <td><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize plsep" style="margin-top:1px; display: inline-block;" alt="checkbox"/> <span style="display: inline-block;" class="oth_tbl_p">Optometrist</span></td>
-            <td><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize plsep" style="margin-top:1px; display: inline-block;" alt="checkbox"/> <span style="display: inline-block;" class="oth_tbl_p">Medical doctor</span></td>
-            <td><img src="{{ asset('image/logo/done.png') }}" class="chksize plsep" style="margin-top:1px; display: inline-block;" alt="checkbox"/> <span style="display: inline-block;" class="oth_tbl_p">NDT Level III</span></td>
+            <td><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize plsep" style="margin-top:1px; display: inline-block;" alt="checkbox"/> <span style="display: inline-block;" class="oth_tbl_p">Medical Doctor</span></td>
+            <td width="34%"><img src="{{ asset('image/logo/done.png') }}" class="chksize plsep" style="margin-top:1px; display: inline-block;" alt="checkbox"/> <span style="display: inline-block;" class="oth_tbl_p">NDT Level III</span></td>
         </tr>
     </table>
 </div>
-<div class="information customp ptop-30">
+<div class="information customp" style="padding-top: 35px;">
     <table width="100%" style="border-collapse: collapse; border: none;">
         <tr>
             <td>

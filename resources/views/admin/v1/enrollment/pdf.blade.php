@@ -352,11 +352,11 @@ $user = Sentinel::check();
     <table width="100%" style="border-collapse: collapse; border: none;">
         <tr>
             <td width="30%">Name</td>
-            <td width="2%">:</td>
+            <td width="4%">:</td>
             <td colspan="2" width="68%" style="text-transform: capitalize;">Mr. Sojitra Hardikkumar Rameshbhai</td>
         </tr>
         <tr>
-            <td>Company</td>
+            <td>Company Name</td>
             <td>:</td>
             <td colspan="2">Self</td>
         </tr>
@@ -405,10 +405,10 @@ $user = Sentinel::check();
             <td>:</td>
             <td colspan="2">OK</td>
         </tr>
-        <tr>
-            <td>Total Training Hours</td>
+        <tr valign="top">
+            <td>Renewal</td>
             <td>:</td>
-            <td colspan="2">Based on continuous satisfactory technical performance<br>( Initial Certificate No RT-II/11-14/2032-DEV NDT )</td>
+            <td colspan="2">Based on continuous satisfactory technical performance<br>( Initial Certificate No RT-II/11-14/2032 - DEV NDT )</td>
         </tr>
         <tr>
             <td></td>

@@ -42,6 +42,11 @@ $role = Sentinel::findRoleById($user->id);
       </a>
     </li>
     <li>
+      <a href="{{ route('company') }}">
+        <i class="fa fa-university"></i> <span>Company</span>
+      </a>
+    </li>
+    <li>
       <a href="{{ route('enrollment') }}">
         <i class="fa fa-file-text"></i> <span>Enrollment</span>
       </a>
