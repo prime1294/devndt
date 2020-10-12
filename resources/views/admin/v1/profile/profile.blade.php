@@ -56,7 +56,7 @@ $role = Sentinel::findRoleById($user->id);
                 <label for="password">New Password</label>
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                  <input type="text" id="password" name="password" class="form-control" autocomplete="false">
+                  <input type="password" id="password" name="password" class="form-control" autocomplete="false">
                 </div>
               </div>
             </div>
@@ -67,7 +67,7 @@ $role = Sentinel::findRoleById($user->id);
                 <label for="password_confirm">Confirm Password</label>
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                  <input type="text" id="password_confirm" name="password_confirm" class="form-control" autocomplete="false">
+                  <input type="password" id="password_confirm" name="password_confirm" class="form-control" autocomplete="false">
                 </div>
               </div>
             </div>
@@ -117,7 +117,7 @@ $role = Sentinel::findRoleById($user->id);
               <label for="mo_number">Mobile Number</label>
               <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-                <input type="text" id="mo_number" name="mo_number" class="form-control" value="{{ $user->mo_number }}">
+                <input type="text" id="mo_number" name="mo_number" class="form-control" value="{{ $user->mo_number }}" placeholder="8733883364" data-inputmask='"mask": "9999999999"' data-mask>
               </div>
             </div>
           </div>
@@ -126,7 +126,7 @@ $role = Sentinel::findRoleById($user->id);
               <label for="alt_number">Alt Mobile Number</label>
               <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-                <input type="text" id="alt_number" name="alt_number" class="form-control" value="{{ $user->alt_number }}">
+                <input type="text" id="alt_number" name="alt_number" class="form-control" value="{{ $user->alt_number }}" placeholder="8733883364" data-inputmask='"mask": "9999999999"' data-mask>
               </div>
             </div>
           </div>
@@ -146,7 +146,7 @@ $role = Sentinel::findRoleById($user->id);
                 <label for="website">Website</label>
                 <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
-                  <input type="text" id="website" name="website" class="form-control" value="{{ $user->website }}">
+                  <input type="search" id="website" name="website" class="form-control" value="{{ $user->website }}">
                 </div>
               </div>
             </div>

@@ -5,7 +5,7 @@ $user = Sentinel::check();
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Programme Card</title>
+<title>Vision</title>
 <style type="text/css">
     {{--@font-face {--}}
     {{--    font-family: 'Hind Vadodara';--}}
@@ -248,7 +248,10 @@ $user = Sentinel::check();
 </style>
 </head>
 <body>
-
+<?php
+$done = 'image/logo/done.png';
+$notdone = 'image/logo/checkbox.png';
+?>
 <div class="information customp">
 <table width="100%" style="border-collapse: collapse; border: none;">
     <tr>
@@ -285,21 +288,13 @@ $user = Sentinel::check();
             <td width="20%;">Expiration Date</td>
         </tr>
         <tr>
-            <td><p class="txt_red" style="font-size: 24px;">1410</p></td>
-            <td><p class="txt_red">Mr. Aamir Vhora<br>(Anup Engineering)</p></td>
-            <td><p class="txt_red">07/04/2018</p></td>
-            <td><p class="txt_red">07/04/2019</p></td>
+            <td><p class="txt_red" style="font-size: 24px;">{{ $info->id.'-'.$info->issue_year }}</p></td>
+            <td><p class="txt_red">{{ ucwords(strtolower($info->greet)).'. '.$info->fname.' '.$info->mname.' '.$info->lname }}<br>({{ $company_name }})</p></td>
+            <td><p class="txt_red">{{ date('d/m/Y',strtotime($info->issue_date)) }}</p></td>
+            <td><p class="txt_red">{{ date('d/m/Y',strtotime($info->expire_date)) }}</p></td>
         </tr>
     </table>
 </div>
-{{--<div class="information customp ptop-10">--}}
-{{--    <table border="1px" width="100%" style="border-collapse: collapse; border: none; text-align: center; font-weight: bold; font-size: 15px;">--}}
-{{--        <tr>--}}
-{{--            <td width="50%">Anup Engineering</td>--}}
-{{--            <td width="50%">Ahmedabad</td>--}}
-{{--        </tr>--}}
-{{--    </table>--}}
-{{--</div>--}}
 <div class="information customp ptop-10">
     <table border="1px" width="100%" style="border-collapse: collapse; border: none; text-align: center;">
         <tr>
@@ -345,16 +340,16 @@ $user = Sentinel::check();
             <td valign="top" align="center">Does not meet</td>
         </tr>
         <tr>
-            <td><img src="{{ asset('image/logo/done.png') }}" class="chksize plsep" style="margin-top:1px; display: inline-block;" alt="checkbox"/> <span style="display: inline-block;" class="oth_tbl_p">Jaeger # 1</span></td>
-            <td align="center"><img src="{{ asset('image/logo/done.png') }}" class="chksize" alt="checkbox"/></td>
-            <td align="center"><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize" alt="checkbox"/></td>
-            <td align="center"><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize" alt="checkbox"/></td>
+            <td><img src="{{ asset($info->nv_type == 1 ? $done : $notdone ) }}" class="chksize plsep" style="margin-top:1px; display: inline-block;" alt="checkbox"/> <span style="display: inline-block;" class="oth_tbl_p">Jaeger # 1</span></td>
+            <td align="center"><img src="{{ asset(($info->spectacles == 0 && $info->nv_type == 1 && $info->nv_condition == 1) ? $done : $notdone) }}" class="chksize" alt="checkbox"/></td>
+            <td align="center"><img src="{{ asset(($info->spectacles == 1 && $info->nv_type == 1 && $info->nv_condition == 1) ? $done : $notdone) }}" class="chksize" alt="checkbox"/></td>
+            <td align="center"><img src="{{ asset(($info->nv_type == 1 && $info->nv_condition == 0) ? $done : $notdone) }}" class="chksize" alt="checkbox"/></td>
         </tr>
         <tr>
-            <td><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize plsep" style="margin-top:1px; display: inline-block;" alt="checkbox"/> <span style="display: inline-block;" class="oth_tbl_p">Jaeger # 2</span></td>
-            <td align="center"><img src="{{ asset('image/logo/done.png') }}" class="chksize" alt="checkbox"/></td>
-            <td align="center"><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize" alt="checkbox"/></td>
-            <td align="center"><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize" alt="checkbox"/></td>
+            <td><img src="{{ asset($info->nv_type == 2 ? $done : $notdone) }}" class="chksize plsep" style="margin-top:1px; display: inline-block;" alt="checkbox"/> <span style="display: inline-block;" class="oth_tbl_p">Jaeger # 2</span></td>
+            <td align="center"><img src="{{ asset(($info->spectacles == 0 && $info->nv_type == 2 && $info->nv_condition == 1) ? $done : $notdone) }}" class="chksize" alt="checkbox"/></td>
+            <td align="center"><img src="{{ asset(($info->spectacles == 1 && $info->nv_type == 2 && $info->nv_condition == 1) ? $done : $notdone) }}" class="chksize" alt="checkbox"/></td>
+            <td align="center"><img src="{{ asset(($info->nv_type == 2 && $info->nv_condition == 0) ? $done : $notdone) }}" class="chksize" alt="checkbox"/></td>
         </tr>
         <tr>
             <td colspan="4"><span class="plsep">At a distance of not less than12 in (30.5cm)</span></td>
@@ -371,20 +366,23 @@ $user = Sentinel::check();
             <td width="22%" align="center"  valign="top">Meets</td>
             <td align="center" valign="top">Does not meet</td>
         </tr>
+        <?php
+            $explode_cv_color = explode(',',$info->cv_color);
+        ?>
         <tr>
             <td><img src="{{ asset('image/logo/done.png') }}" class="chksize plsep" style="margin-top:1px; display: inline-block;"  alt="checkbox"/> <span style="display: inline-block;" class="oth_tbl_p">Ishihara Eye Chart</span></td>
-            <td align="center"><img src="{{ asset('image/logo/done.png') }}" class="chksize" alt="checkbox"/></td>
-            <td align="center"><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize" alt="checkbox"/></td>
+            <td align="center"><img src="{{ asset($info->cv_condition == 1 ? $done : $notdone) }}" class="chksize" alt="checkbox"/></td>
+            <td align="center"><img src="{{ asset($info->cv_condition == 0 ? $done : $notdone) }}" class="chksize" alt="checkbox"/></td>
         </tr>
         <tr>
             <td><span class="plsep">Red / Green differentiation</span></td>
-            <td align="center"><img src="{{ asset('image/logo/done.png') }}" class="chksize" alt="checkbox"/></td>
-            <td align="center"><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize" alt="checkbox"/></td>
+            <td align="center"><img src="{{ asset($info->cv_condition == 1 ? $done : $notdone) }}" class="chksize" alt="checkbox"/></td>
+            <td align="center"><img src="{{ asset(($info->cv_condition == 0 && in_array(1,$explode_cv_color)) ? $done : $notdone) }}" class="chksize" alt="checkbox"/></td>
         </tr>
         <tr>
             <td><span class="plsep">Blue/ Yellow differentiation</span></td>
-            <td align="center"><img src="{{ asset('image/logo/done.png') }}" class="chksize" alt="checkbox"/></td>
-            <td align="center"><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize" alt="checkbox"/></td>
+            <td align="center"><img src="{{ asset($info->cv_condition == 1 ? $done : $notdone) }}" class="chksize" alt="checkbox"/></td>
+            <td align="center"><img src="{{ asset(($info->cv_condition == 0 && in_array(2,$explode_cv_color)) ? $done : $notdone) }}" class="chksize" alt="checkbox"/></td>
         </tr>
     </table>
 </div>
@@ -400,8 +398,8 @@ $user = Sentinel::check();
         </tr>
         <tr>
             <td><img src="{{ asset('image/logo/done.png') }}" class="chksize plsep" style="margin-top:1px; display: inline-block;"  alt="checkbox"/> <span style="display: inline-block;" class="oth_tbl_p">Gray Shade Chart</span></td>
-            <td align="center"><img src="{{ asset('image/logo/done.png') }}" class="chksize" alt="checkbox"/></td>
-            <td align="center"><img src="{{ asset('image/logo/checkbox.png') }}" class="chksize" alt="checkbox"/></td>
+            <td align="center"><img src="{{ asset($info->gray_shade == 1 ? $done : $notdone) }}" class="chksize" alt="checkbox"/></td>
+            <td align="center"><img src="{{ asset($info->gray_shade == 0 ? $done : $notdone) }}" class="chksize" alt="checkbox"/></td>
         </tr>
     </table>
 </div>
@@ -409,7 +407,7 @@ $user = Sentinel::check();
     <table width="100%" style="border-collapse: collapse; border: none;">
         <tr>
             <td>
-                <p class="">This is to certify that I, <u><b>BALDEV PATEL</b></u>  administrated an eye exam to  <b>Mr. Aamir Vhora</b> on <b>07/04/2018</b></p>
+                <p class="">This is to certify that I, <u><b>BALDEV PATEL</b></u>  administrated an eye exam to  <b>{{ ucwords(strtolower($info->greet)).'. '.$info->fname.' '.$info->mname.' '.$info->lname }}</b> on <b>{{ date('d/m/Y',strtotime($info->issue_date)) }}</b></p>
                 <p class="">who has demonstrated the vision capabilities indicated above . Check one of the following:-</p>
             </td>
         </tr>

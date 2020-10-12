@@ -217,15 +217,19 @@ function select2Bank() {
 function daterangepicker(callback = "") {
   $('.daterange').daterangepicker({
     ranges   : {
-      'Today'       : [moment(), moment()],
+      /*'Today'       : [moment(), moment()],
       'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
       'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
       'Last 30 Days': [moment().subtract(29, 'days'), moment()],
       'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-      'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+      'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],*/
+      'DEVNDT Range'  : [moment().subtract(6, 'month'), moment().add(6, 'month')]
     },
     startDate: moment().subtract(29, 'days'),
-    endDate  : moment()
+    endDate  : moment(),
+      locale: {
+          format: 'DD-MM-YYYY'
+      }
   },
   function (start, end) {
     $('.daterange span').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'));
@@ -394,4 +398,197 @@ function showResult(event, ui) {
     $('#search_data').val(ui.item.name);
 }
 
+
+$(document).on("click","#submitref",function(red){
+    red.preventDefault();
+
+    if($("#add_ref_fname").val() == "") {
+        toastr.error("Please, Enter First Name");
+        $("#add_ref_fname").focus();
+        return false;
+    }
+
+    var formarr = $("#add_ref_form").serialize();
+    $.ajax({
+        url:'{{ route('ref.register') }}',
+        type:'POST',
+        data:formarr,
+        success:function(e) {
+            if(e.status == "true") {
+                toastr.success(e.message);
+                $("#addReferenceModel").modal('hide');
+                table.ajax.reload();
+            } else {
+                toastr.error(e.message);
+                return false;
+            }
+        }
+    });
+});
+
+
+$(document).on("click","#submiteditref",function(red){
+    red.preventDefault();
+
+    if($("#edit_ref_id").val() == "") {
+        toastr.error("Please, Reference id required");
+        $("#edit_ref_id").focus();
+        return false;
+    }
+    if($("#edit_ref_fname").val() == "") {
+        toastr.error("Please, Enter First Name");
+        $("#edit_ref_fname").focus();
+        return false;
+    }
+
+    var formarr = $("#edit_ref_form").serialize();
+    $.ajax({
+        url:'{{ route('ref.update') }}',
+        type:'POST',
+        data:formarr,
+        success:function(e) {
+            if(e.status == "true") {
+                toastr.success(e.message);
+                $("#editReferenceModel").modal('hide');
+                table.ajax.reload();
+            } else {
+                toastr.error(e.message);
+                return false;
+            }
+        }
+    });
+});
+
+
+$(document).on("click","#submitcompany",function(red){
+    red.preventDefault();
+
+   if($("#ac_comp_name").val() == "") {
+       toastr.error("Please, Enter Company Name");
+       $("#ac_comp_name").focus();
+       return false;
+   }
+
+    var formarr = $("#add_company_form").serialize();
+    $.ajax({
+        url:'{{ route('company.register') }}',
+        type:'POST',
+        data:formarr,
+        success:function(e) {
+            if(e.status == "true") {
+                toastr.success(e.message);
+                $("#addCompanyModel").modal('hide');
+                table.ajax.reload();
+            } else {
+                toastr.error(e.message);
+                return false;
+            }
+        }
+    });
+});
+
+
+
+$(document).ready(function(e){
+    // initdatepicker(true);
+    $('.select2').each(function () {
+        $(this).select2({
+            dropdownParent: $(this).parent()
+        });
+    });
+
+    $(':input[type=text]:not([data-mask])').on('propertychange input', function (e) {
+        var mystr = $(this).val();
+        $(this).val(mystr.charAt(0).toUpperCase() + mystr.slice(1));
+    });
+
+    $('.calmarks').on('propertychange input', function (e) {
+        var current_val = parseInt($(this).val());
+        if(current_val >= 71 && current_val <= 100) {
+            $(this).css('border-color','#d2d6de');
+        } else {
+            $(this).css('border-color','#f00');
+        }
+    });
+
+    $(".company-select2").select2({
+        //minimumInputLength: 2,
+        ajax: {
+            url: "{{ route('company.select') }}",
+            type: "POST",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    _token: "{{ csrf_token() }}",
+                    searchTerm: params.term
+                };
+            },
+            processResults: function (response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true,
+            success:function(e) {
+                jQuery.map(e, function(obj) {
+                    if(obj.id === company_select)
+                        console.log(obj.text); // or return obj.name, whatever.
+                });
+            }
+        }
+    });
+
+    $(".ref-select2").select2({
+        //minimumInputLength: 2,
+        ajax: {
+            url: "{{ route('ref.select') }}",
+            type: "POST",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    _token: "{{ csrf_token() }}",
+                    searchTerm: params.term
+                };
+            },
+            processResults: function (response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true
+        }
+    });
+
+    $('.company-select2').each(function(index, currentElement) {
+        if($(".company-select2")[index].hasAttribute('data-default')) {
+            var company_select = $(".company-select2")[index].getAttribute('data-default');
+            var get_id = $(".company-select2")[index].getAttribute("id");
+            $.ajax({
+                url: "{{ route('company.info') }}",
+                type: "POST",
+                data: '_token={{ csrf_token() }}&id='+company_select,
+                success:function(e) {
+                    var option = new Option(e.company_name, e.id, true, true);
+                    $("#"+get_id).append(option).trigger('change');
+                }
+            });
+        }
+    });
+    if($(".ref-select2")[0].hasAttribute('data-default')) {
+        var ref_select = $(".ref-select2").attr('data-default');
+        $.ajax({
+            url: "{{ route('ref.info') }}",
+            type: "POST",
+            data: '_token={{ csrf_token() }}&id='+ref_select,
+            success:function(e) {
+                var fullname = e.fname+' '+e.mname+' '+e.lname;
+                var option = new Option(fullname, e.id, true, true);
+                $(".ref-select2").append(option).trigger('change');
+            }
+        });
+    }
+
+});
 </script>

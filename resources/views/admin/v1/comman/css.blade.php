@@ -437,5 +437,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     }
 }
     /* Layout */
-
+    .datatable-row-wrapper:hover {
+        z-index: 12;
+    }
 </style>

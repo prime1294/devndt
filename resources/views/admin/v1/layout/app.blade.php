@@ -7,7 +7,7 @@ echo View::make('admin.v1.comman.css');
 echo View::make('admin.v1.comman.js');
 ?>
 </head>
-<body class="skin-blue fixed sidebar-mini sidebar-mini-expand-feature sidebar-collapse">
+<body class="skin-blue sidebar-mini sidebar-collapse">
 <div class="wrapper">
 <?php
 echo View::make('admin.v1.comman.header');

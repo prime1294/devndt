@@ -52,8 +52,28 @@ $role = Sentinel::findRoleById($user->id);
       </a>
     </li>
     <li>
-      <a href="{{ route('new.vision') }}">
+      <a href="{{ route('vision') }}">
         <i class="fa fa-eye"></i> <span>Vision</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ route('reference') }}">
+        <i class="fa fa-street-view"></i> <span>Reference</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ route('course') }}">
+        <i class="fa fa-certificate"></i> <span>Courses</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ route('designation') }}">
+        <i class="fa fa-address-card"></i> <span>Designation</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ route('education') }}">
+        <i class="fa fa-graduation-cap"></i> <span>Education</span>
       </a>
     </li>
     <li>

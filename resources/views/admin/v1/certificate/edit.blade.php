@@ -30,7 +30,7 @@
 <section class="content-header">
   <h1>
     <i class="fa fa-eye"></i> Vision
-    <small>Add New Certificate</small>
+    <small>Edit Certificate</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{ route('user.dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -44,26 +44,30 @@
     <div class="col-md-12">
       <div class="box box-primary">
       <div class="box-body">
-        <form method="post" action="{{ route('vision.register') }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('vision.update',$info->id) }}" enctype="multipart/form-data">
           {!! csrf_field() !!}
+
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="company_id">Company Name</label>
-                <select style="width: 100%;" id="company_id" name="company_id" class="form-control company-select2" data-placeholder="Select Company">
+                <label for="add_company_no">Company</label>
+                <?php
+                $company_default = $info->company_id != 0 ? 'data-default='.$info->company_id : '';
+                ?>
+                <select style="width: 100%;" id="company_id" name="company_id" class="form-control company-select2" {{ $company_default }} data-placeholder="Select Company">
                 </select>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <label for="certificate_date">Issue Date</label>
-                <input type="text" id="certificate_date" name="certificate_date"  class="form-control datepicker">
+                <input type="text" id="certificate_date" name="certificate_date" value="{{ date('d-m-Y',strtotime($info->issue_date)) }}"  class="form-control datepicker">
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <label for="expire_date">Expiration Date</label>
-                <input type="text" id="expire_date" name="expire_date"  readonly class="form-control">
+                <input type="text" id="expire_date" name="expire_date" value="{{ date('d-m-Y',strtotime($info->expire_date)) }}"  readonly class="form-control">
               </div>
             </div>
           </div>
@@ -73,29 +77,29 @@
               <div class="form-group">
                 <label for="name">Candidate Name</label>
                 <div class="row">
-                <div class="col-md-2">
-                    <select  style="width: 100%;" id="dev_ndt_id" name="dev_ndt_id" class="form-control ref_fetch_ndt select2">
-                      <option value="">Find By Id</option>
-                      @foreach($enrollment_list as $row)
-                        <option value="{{ $row->id }}">{{ $row->id }} - {{ $row->front_fname.' '.$row->front_lname }}</option>
-                      @endforeach
-                    </select>
-                </div>
+                  <div class="col-md-2">
+                      <select  style="width: 100%;" id="dev_ndt_id" name="dev_ndt_id" class="form-control ref_fetch_ndt select2">
+                        <option value="">Find By Id</option>
+                        @foreach($enrollment_list as $row)
+                          <option value="{{ $row->id }}"  {{ $row->id == $info->ndt_id ? "selected" : "" }}>{{ $row->id }} - {{ $row->front_fname.' '.$row->front_lname }}</option>
+                        @endforeach
+                      </select>
+                  </div>
                 <div class="col-md-1">
                   <select id="f_greet" name="f_greet" value="" class="form-control">
-                    <option value="MR">Mr</option>
-                    <option value="MS">Ms</option>
-                    <option value="MD">Md</option>
+                    <option value="MR" {{ $info->greet == "MR" ? "selected" : "" }}>Mr</option>
+                    <option value="MS" {{ $info->greet == "MS" ? "selected" : "" }}>Ms</option>
+                    <option value="MD" {{ $info->greet == "MD" ? "selected" : "" }}>Md</option>
                   </select>
-                  </div>
+                </div>
                   <div class="col-md-3">
-                  <input type="text" id="f_fname" name="f_fname" placeholder="First Name" value="" class="form-control">
-                  </div>
+                  <input type="text" id="f_fname" name="f_fname" placeholder="First Name" value="{{ $info->fname }}" class="form-control">
+                </div>
                   <div class="col-md-3">
-                  <input type="text" id="f_mname" name="f_mname" placeholder="Middle Name" value="" class="form-control">
-                  </div>
+                  <input type="text" id="f_mname" name="f_mname" placeholder="Middle Name" value="{{ $info->mname }}" class="form-control">
+                </div>
                   <div class="col-md-3">
-                  <input type="text" id="f_lname" name="f_lname" placeholder="Last Name" value="" class="form-control">
+                  <input type="text" id="f_lname" name="f_lname" placeholder="Last Name" value="{{ $info->lname }}" class="form-control">
                 </div>
                 </div>
               </div>
@@ -112,19 +116,19 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="lbl1">Spectacles <input type="checkbox" id="method" name="spectacles" value="1" class="form-control"></label>
+                    <label class="lbl1">Spectacles <input type="checkbox" id="method" name="spectacles" value="1" {{ $info->spectacles == 1 ? "checked" : "" }} class="form-control"></label>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="lbl1">J1 <input type="radio" id="method" name="j" checked value="1" class="form-control"></label>
-                    <label class="lbl1">J2 <input type="radio" id="method" name="j" value="2" class="form-control"></label>
+                    <label class="lbl1">J1 <input type="radio" id="method" name="j" {{ $info->nv_type == 1 ? "checked" : ""  }} value="1" class="form-control"></label>
+                    <label class="lbl1">J2 <input type="radio" id="method" name="j" {{ $info->nv_type == 2 ? "checked" : ""  }} value="2" class="form-control"></label>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="lbl1">Ok <input type="radio" id="method" name="nv_condition" checked value="1" class="form-control"></label>
-                    <label class="lbl1">Not OK <input type="radio" id="method" name="nv_condition" value="0" class="form-control"></label>
+                    <label class="lbl1">Ok <input type="radio" id="method" name="nv_condition" {{ $info->nv_condition == 1 ? "checked" : "" }} value="1" class="form-control"></label>
+                    <label class="lbl1">Not OK <input type="radio" id="method" name="nv_condition" {{ $info->nv_condition == 0 ? "checked" : "" }} value="0" class="form-control"></label>
                   </div>
                 </div>
               </div>
@@ -138,14 +142,17 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="lbl1">OK <input type="radio" id="cv_yes" name="cv" checked value="1" class="form-control"></label>
-                    <label class="lbl1">Not OK <input type="radio" id="cv_no" name="cv" value="0" class="form-control"></label>
+                    <label class="lbl1">OK <input type="radio" id="cv_yes" name="cv" {{ $info->cv_condition == 1 ? "checked" : "" }} value="1" class="form-control"></label>
+                    <label class="lbl1">Not OK <input type="radio" id="cv_no" name="cv" {{ $info->cv_condition == 0 ? "checked" : "" }} value="0" class="form-control"></label>
                   </div>
                 </div>
                 <div class="col-md-12 hideme">
                   <div class="form-group">
-                    <label class="lbl1">Red / Green <input type="checkbox" id="method" name="method[]" checked value="1" class="form-control primechk"></label>
-                    <label class="lbl1">Blue / Yellow <input type="checkbox" id="method" name="method[]" checked value="2" class="form-control primechk"></label>
+                    <?php
+                          $color_vision_group = explode(',',$info->cv_color);
+                    ?>
+                    <label class="lbl1">Red / Green <input type="checkbox" id="method" name="method[]" {{ in_array(1,$color_vision_group) ? "checked" : "" }} value="1" class="form-control primechk"></label>
+                    <label class="lbl1">Blue / Yellow <input type="checkbox" id="method" name="method[]" {{ in_array(2,$color_vision_group) ? "checked" : "" }} value="2" class="form-control primechk"></label>
                   </div>
                 </div>
               </div>
@@ -158,8 +165,8 @@
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label class="lbl1">Ok <input type="radio" id="method" name="gray_shade" checked value="1" class="form-control"></label>
-                      <label class="lbl1">Not OK <input type="radio" id="method" name="gray_shade" value="0" class="form-control"></label>
+                      <label class="lbl1">Ok <input type="radio" id="method" name="gray_shade" {{ $info->gray_shade == 1 ? "checked" : "" }} value="1" class="form-control"></label>
+                      <label class="lbl1">Not OK <input type="radio" id="method" name="gray_shade" {{ $info->gray_shade == 0 ? "checked" : "" }} value="0" class="form-control"></label>
                     </div>
                   </div>
                 </div>
@@ -169,7 +176,7 @@
 
           <div class="form-devider"></div>
           <div class="form-group">
-          <button type="submit" class="btn btn-primary" onclick="return check_val();"><i class="fa fa-plus"></i> Renew & Save</button>
+          <button type="submit" class="btn btn-primary" onclick="return check_val();"><i class="fa fa-upload"></i> Update</button>
           </div>
           </form>
       </div>
@@ -185,7 +192,6 @@
 </a>
 <div class="ripple"></div>
 </div>
-
 
 @include('admin.v1.enrollment.add_company')
 
@@ -230,7 +236,10 @@ function check_val() {
 }
 
 $(document).ready(function(e){
-  initdatepicker(true);
+  initdatepicker(false);
+  @if($info->cv_condition == 0)
+  $(".hideme").slideDown();
+  @endif
 });
 
 $(document).on("change","#company_id",function(e) {

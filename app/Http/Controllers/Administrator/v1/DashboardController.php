@@ -6,6 +6,9 @@ use App\Model\BanksUser;
 use App\Model\BankTransection;
 use App\Model\CashTransection;
 use App\Model\ChequeTransection;
+use App\Model\Company;
+use App\Model\Ecertificate;
+use App\Model\Enrollment;
 use App\Model\Expenses;
 use App\Model\Invoice;
 use App\Model\InvoicePayment;
@@ -14,6 +17,7 @@ use App\Model\KarigarReport;
 use App\Model\Process;
 use App\Model\ReadyStock;
 use App\Model\StockProcess;
+use App\Model\Vision;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Admin;
@@ -37,8 +41,11 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Sentinel::getUser();
-        $data = [];
-      return view('admin.v1.dashboard.dashboard',$data);
+        $data['ctn_company'] = Company::where('status',1)->count();
+        $data['ctn_enrollment'] = Enrollment::count();
+        $data['ctn_certificate'] = Ecertificate::count();
+        $data['ctn_vision'] = Vision::where('status',1)->count();
+        return view('admin.v1.dashboard.dashboard',$data);
     }
 
     public function outstanding(Request $request) {

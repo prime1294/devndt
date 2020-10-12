@@ -1,8 +1,41 @@
 <?php
+
+use App\Model\Company;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
 class Admin {
+
+    public static function getSNTEdition($number) {
+        $array = array(2011,2016,2020);
+        sort($array);
+        foreach ($array as $a) {
+            if ($a > $number) return $a;
+        }
+        return end($array); // or return NULL;
+    }
+
+    public static function getCompanyInfo($id) {
+        return Company::find($id);
+    }
+
+    public static function adjustmentTblpadding($count) {
+        if($count == 4) {
+            return ' style="padding:6px;"';
+        } elseif($count == 5) {
+            return ' style="padding:3px;"';
+        } elseif($count == 6) {
+            return ' style="padding:1px;"';
+        } elseif($count >= 7) {
+            return ' style="padding:0px;"';
+        } else {
+            return "";
+        }
+    }
+
+    public static function senatizeFileName($file) {
+        return mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '_', $file);
+    }
 
   public static function checkRedirect($request,$route,$message) {
     if ($request->session()->has('redirecting') && $request->session()->has('redirectingback')) {
@@ -36,6 +69,9 @@ class Admin {
   }
 
   public static  function ordinal($number) {
+        if($number == 0) {
+            return "Initial";
+        }
         $ends = array('th','st','nd','rd','th','th','th','th','th','th');
         if ((($number % 100) >= 11) && (($number%100) <= 13))
             return $number. '<sup>th</sup>';

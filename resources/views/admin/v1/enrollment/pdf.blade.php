@@ -5,7 +5,11 @@ $user = Sentinel::check();
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Programme Card</title>
+@if(isset($cinfo))
+<title>{{ config('setting.app_name') }} | {{ $cinfo->counce_name }}</title>
+@else
+<title>{{ config('setting.app_name') }} | Certificate of {{ $info->front_fname.' '.$info->front_lname }}</title>
+@endif
 <style type="text/css">
     {{--@font-face {--}}
     {{--    font-family: 'Hind Vadodara';--}}
@@ -217,10 +221,38 @@ $user = Sentinel::check();
         padding-top: 10px;
         padding-bottom: 10px;
     }
+    .fixed-footer {
+        position: absolute;
+        left: 20px;
+        bottom: 0px;
+    }
 </style>
 </head>
 <body>
+@inject('provider', 'App\Http\Controllers\Administrator\v1\EnrollmentController')
+<?php
+    if($cid) {
+        $forloop = [$cid];
+    } else {
+        $forloop = [];
+        $allcertif = $provider::getallCretificates($info->id);
+        foreach($allcertif as $devndtcertificate) {
+            $forloop[] = $devndtcertificate->id;
+        }
+    }
 
+    $lastElement = end($forloop);
+    foreach($forloop as $cloop) {
+    $cinfo = $provider::getCertificateInfo($cloop);
+    $certificate_no = $provider::generateCertificateNumber($info->id,$cinfo->id);
+    $enrollment_no = $cinfo->short_name.'-'.$info->id;
+
+    //get company info if not self
+    $company_name_back = $info->sponsor != "self" ? Admin::getCompanyInfo($info->company_id_certificate)->company_name : "Self";
+
+    //unserialized history
+    $history = unserialize($cinfo->chistory);
+?>
 <div class="information customp ptop-10">
 <table width="100%" style="border-collapse: collapse; border: none;">
     <tr>
@@ -244,15 +276,15 @@ $user = Sentinel::check();
 <div class="information customp ptop-10">
     <table width="100%" style="border-collapse: collapse; border: none;">
         <tr>
-            <td width="50%"><p class="certificate_no" style="text-align: left;"><b>Certificate No. <span class="h_address">RT-II/11-19/R-3526</span></b></p>
+            <td width="50%"><p class="certificate_no" style="text-align: left;"><b>Certificate No. <span class="h_address">{{ $certificate_no }}</span></b></p>
             </td>
-            <td width="50%"><p class="enroll_no" style="text-align: right;"><b>Enrollment No. <span class="h_address">R-R3526</span></b></p>
+            <td width="50%"><p class="enroll_no" style="text-align: right;"><b>Enrollment No. <span class="h_address">{{ $enrollment_no }}</span></b></p>
             </td>
         </tr>
     </table>
 </div>
 <div class="photo-content ptop-40" style="position: absolute; clear: both;">
-    <img src="{{ asset('image/profile/passport.jpg') }}" style="max-width: 120px; border: 1px solid #000000;" alt="Photo"/>
+    <img src="{{ asset($info->photo) }}" style="max-width: 120px; border: 1px solid #000000;" alt="Photo"/>
     <img src="{{ asset('image/logo/stamp.png') }}" style="max-width: 100px; margin-left: -60px; margin-top: 30px;" alt="Photo"/>
 </div>
 <div class="information customp ptop-10">
@@ -261,10 +293,10 @@ $user = Sentinel::check();
             <td>
                 <p class="certificate_name" style="text-align: center;">Certificate of Proficiency</p>
                 <p class="certificate_second" style="text-align: center;">This is to certify that</p>
-                <p class="certificate_user h_other" style="text-align: center;text-transform: capitalize;">Mr. <span style="text-transform: uppercase;">Sojitra Hardhikkumar Rameshbhai</span></p>
+                <p class="certificate_user h_other" style="text-align: center;text-transform: capitalize;">{{ $info->front_greet }}. <span style="text-transform: uppercase;">{{ $info->front_fname.' '.$info->front_mname.' '.$info->front_lname }}</span></p>
                 <p class="certificate_third" style="text-align: center;">has met the certification requirements and has demonstrated proficiency<br>by qualifying certification examination and is hereby certified to</p>
-                <p class="certificate_cource h_other" style="text-align: center;text-transform: uppercase;">NDT LEVEL II<br>IN<br>RADIOGRAPHIC TESTING</p>
-                <p class="certificate_forth" style="text-align: center;">Training course and examination conducted as per recommendations<br>of ASNT document SNT TC -1A 2016 edition</p>
+                <p class="certificate_cource h_other" style="text-align: center;text-transform: uppercase;">NDT LEVEL {{ $info->ndt_level }}<br>IN<br>{{ $cinfo->counce_name }}</p>
+                <p class="certificate_forth" style="text-align: center;">Training course and examination conducted as per recommendations<br>of ASNT document SNT TC -1A {{ $info->snt_edition }} edition</p>
             </td>
         </tr>
     </table>
@@ -279,22 +311,22 @@ $user = Sentinel::check();
         <tr>
             <td>General</td>
             <td>70</td>
-            <td>80.00</td>
+            <td>{{ $cinfo->marks_general }}</td>
         </tr>
         <tr>
             <td>Specific</td>
             <td>70</td>
-            <td>82.00</td>
+            <td>{{ $cinfo->marks_specific }}</td>
         </tr>
         <tr>
             <td>Practical</td>
             <td>70</td>
-            <td>84.00</td>
+            <td>{{ $cinfo->marks_practical }}</td>
         </tr>
         <tr>
             <td>Average</td>
             <td>80</td>
-            <td>82.00</td>
+            <td>{{ $cinfo->marks_average }}</td>
         </tr>
     </table>
 </div>
@@ -306,9 +338,9 @@ $user = Sentinel::check();
             <td width="33.33%">Expiration Date</td>
         </tr>
         <tr>
-            <td>{!! Admin::ordinal(1) !!} Re-Certification</td>
-            <td>10-11-2019</td>
-            <td>10-11-2024</td>
+            <td>{!! Admin::ordinal($cinfo->tno) !!} {{ $info->creation == 3 && $cinfo->tno != 0 ? "Re-" : "" }}Certification</td>
+            <td>{{ date('d/m/Y',strtotime($cinfo->from_date)) }}</td>
+            <td>{{ date('d/m/Y',strtotime($cinfo->to_date)) }}</td>
         </tr>
     </table>
 </div>
@@ -316,7 +348,11 @@ $user = Sentinel::check();
     <table width="100%" style="border-collapse: collapse; border: none;">
         <tr>
             <td>
-                <p class="certificate_five">COURCE DIRECTOR & EXAMINER</p>
+                @if($info->creation == 2 || $info->creation == 3)
+                    <p class="certificate_five">RENEWED BY</p>
+                @else
+                    <p class="certificate_five">COURCE DIRECTOR & EXAMINER</p>
+                @endif
                 <p class="certificate_six h_other">BALDEV L. PATEL</p>
                 <p class="certificate_seven">ASNT NDT Level-III, RT, UT, MT, PT, VT, ET, LT, IR, MFL</p>
                 <p class="certificate_eight">Certificate No.: 200510</p>
@@ -353,17 +389,17 @@ $user = Sentinel::check();
         <tr>
             <td width="30%">Name</td>
             <td width="4%">:</td>
-            <td colspan="2" width="68%" style="text-transform: capitalize;">Mr. Sojitra Hardikkumar Rameshbhai</td>
+            <td colspan="2" width="68%" style="text-transform: capitalize;">{{ ucwords(strtolower($info->back_greet)).'. '.ucwords(strtolower($info->back_fname)).' '.ucwords(strtolower($info->back_mname)).' '.ucwords(strtolower($info->back_lname)) }}</td>
         </tr>
         <tr>
             <td>Company Name</td>
             <td>:</td>
-            <td colspan="2">Self</td>
+            <td colspan="2">{{ $company_name_back }}</td>
         </tr>
         <tr>
             <td>Reference Document</td>
             <td>:</td>
-            <td colspan="2">SNT TC -1A 2016 Edition</td>
+            <td colspan="2">SNT TC -1A, {{ $info->snt_edition }} Edition</td>
         </tr>
         <tr>
             <td>Written Practice No.</td>
@@ -373,68 +409,78 @@ $user = Sentinel::check();
         <tr>
             <td>Certificate No.</td>
             <td>:</td>
-            <td colspan="2">RT-II/11-19/R-3526</td>
+            <td colspan="2">{{ $certificate_no }}</td>
         </tr>
         <tr>
             <td>Method</td>
             <td>:</td>
-            <td colspan="2">Radiographic Testing</td>
+            <td colspan="2">{{ $cinfo->counce_name }}</td>
         </tr>
         <tr>
             <td>Level</td>
             <td>:</td>
-            <td colspan="2">II</td>
+            <td colspan="2">{{ strtoupper($info->ndt_level) }}</td>
         </tr>
         <tr>
             <td>Educational Background</td>
             <td>:</td>
-            <td colspan="2">D.M.E.</td>
+            <td colspan="2">{{ $provider::getEducationGroupName($info->education,false) }}</td>
         </tr>
         <tr>
             <td>Experience ( NDT )</td>
             <td>:</td>
-            <td colspan="2">06 years</td>
+            <td colspan="2">{{ $info->exp_hour }} {{ $info->exp_hour <= 1 ? substr(strtolower($info->exp_type),0,-1) : strtolower($info->exp_type) }}</td>
         </tr>
         <tr>
             <td>Near Vision Acuity</td>
             <td>:</td>
-            <td colspan="2">J2</td>
+            <td colspan="2">{{ $info->vision }}</td>
         </tr>
         <tr>
             <td>Color Contrast</td>
             <td>:</td>
             <td colspan="2">OK</td>
         </tr>
+        @if($info->creation == 1)
+        <tr>
+            <td>Total Training Hours</td>
+            <td>:</td>
+            <td colspan="2">{{ $cinfo->trainning_hours }}</td>
+        </tr>
+        @endif
+        @if($info->creation == 2 || $info->creation == 3)
         <tr valign="top">
             <td>Renewal</td>
             <td>:</td>
-            <td colspan="2">Based on continuous satisfactory technical performance<br>( Initial Certificate No RT-II/11-14/2032 - DEV NDT )</td>
+            <td colspan="2">Based on continuous satisfactory technical performance<br>( Previous Certificate No. {{ $cinfo->cno }} {{ $cinfo->previous_certificate == 1 ? "- DEV NDT" : "" }} )</td>
         </tr>
+        @endif
         <tr>
             <td></td>
             <td></td>
             <td>Issue Date</td>
             <td>Expiration Date</td>
         </tr>
+        <?php $adjustment = Admin::adjustmentTblpadding(count($history)); ?>
+        @foreach($history as $row)
         <tr>
-            <td>Initial Certification</td>
-            <td>:</td>
-            <td>10/11/2014</td>
-            <td>10/11/2019</td>
+            <td {!! $adjustment !!}>{!! Admin::ordinal($row['no']) !!} {{ $row['no'] != 0 && $info->creation == 3 ? "Re-" : ""  }}Certification</td>
+            <td {!! $adjustment !!}>:</td>
+            <td {!! $adjustment !!}>{{ date('d/m/Y',strtotime($row['from_date'])) }}</td>
+            <td {!! $adjustment !!}>{{ date('d/m/Y',strtotime($row['to_date'])) }}</td>
         </tr>
-        <tr>
-            <td>{!! Admin::ordinal(1) !!} Re-Certification</td>
-            <td>:</td>
-            <td>10/11/2019</td>
-            <td>10/11/2024</td>
-        </tr>
+        @endforeach
     </table>
 </div>
-<div class="information customp ptop-20">
+<div class="information customp ptop-20 fixed-footer">
     <table width="100%" style="border-collapse: collapse; border: none;">
         <tr>
             <td>
+                @if($info->creation == 2 || $info->creation == 3)
+                    <p class="certificate_five">RENEWED BY</p>
+                @else
                 <p class="certificate_five">COURCE DIRECTOR & EXAMINER</p>
+                @endif
                 <p class="certificate_six h_other">BALDEV L. PATEL</p>
                 <p class="certificate_seven">ASNT NDT Level-III, RT, UT, MT, PT, VT, ET, LT, IR, MFL</p>
                 <p class="certificate_eight">Certificate No.: 200510</p>
@@ -442,7 +488,11 @@ $user = Sentinel::check();
         </tr>
     </table>
 </div>
-
-
+@if($cloop != $lastElement)
+    <div class="page-break"></div>
+@endif
+<?php
+    }
+?>
 </body>
 </html>
