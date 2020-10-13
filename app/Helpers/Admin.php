@@ -6,6 +6,25 @@ use Carbon\Carbon;
 
 class Admin {
 
+    public static function getInvoiceType($id = null) {
+        $types = [
+           "1" => "NDT Certification",
+           "2" => "Re-certification of NDT Certificate",
+           "3" => "Procedure Approval",
+           "4" => "Vision Acuity Test Certification",
+           "5" => "Consultancy Services",
+           "6" => "Welding Inspection",
+           "7" => "NDT Testing Services",
+           "8" => "Written Practices",
+        ];
+
+        if($id) {
+            return $types[$id];
+        } else {
+            return $types;
+        }
+    }
+
     public static function getSNTEdition($number) {
         $array = array(2011,2016,2020);
         sort($array);

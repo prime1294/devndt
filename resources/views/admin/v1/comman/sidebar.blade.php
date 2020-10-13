@@ -57,6 +57,11 @@ $role = Sentinel::findRoleById($user->id);
       </a>
     </li>
     <li>
+      <a href="{{ route('new.invoice') }}">
+        <i class="fa fa-trello"></i> <span>Invoice</span>
+      </a>
+    </li>
+    <li>
       <a href="{{ route('reference') }}">
         <i class="fa fa-street-view"></i> <span>Reference</span>
       </a>

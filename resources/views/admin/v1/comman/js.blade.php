@@ -370,29 +370,6 @@ function getchequeHandler(type,opration) {
     }
 }
 
-$(document).ready(function(){
-
-    $('#search_data').autocomplete({
-        source: "{{ route('find.stock') }}",
-        minLength: 1,
-        autoFocus: true,
-        select: function(event, ui)
-        {
-            $('#search_data').val(ui.item.name);
-            window.location.href = ui.item.value;
-            return false;
-        },focus :showResult,
-        change: showResult,
-        keydown: showResult
-    }).data('ui-autocomplete')._renderItem = function(ul, item){
-        return $("<li class='ui-autocomplete-row'></li>")
-            .data("item.autocomplete", item)
-            .append(item.label)
-            .appendTo(ul);
-    };
-
-});
-
 function showResult(event, ui) {
     event.preventDefault();
     $('#search_data').val(ui.item.name);

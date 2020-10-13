@@ -177,21 +177,6 @@ $role = Sentinel::findRoleById($user->id);
 
 <script type="text/javascript">
 
-  function changecityhtml(id,val) {
-    $.ajax({
-      url:'{{ route("city.ajax") }}',
-      type:'POST',
-      data: "id="+id+"&_token={{ csrf_token() }}",
-      success:function(e) {
-        // $("#"+to).html(e);
-        $("#city").select2('destroy');
-        $('#city').find('option').remove().end();
-        $("#city").select2({ data: e.cities });
-        $('#city').val(val).trigger('change');
-      }
-    });
-  }
-
   function checkpasswordvalidation() {
     if($("#password").val() == "") {
       $("#password").focus();
@@ -226,9 +211,6 @@ $role = Sentinel::findRoleById($user->id);
     });
   });
 
-  $(document).on("change","#state",function(e) {
-    changecityhtml($(this).val(),0);
-  });
 
   $(document).on("click","#fbholdernew",function(e) {
     jcropratio = 1;
@@ -243,7 +225,6 @@ $role = Sentinel::findRoleById($user->id);
   $(document).ready(function(e) {
     jcropratio = 0;
     jcropresize = true;
-    changecityhtml('{{ $user->state }}','{{ $user->city }}');
   });
 </script>
 @endsection
