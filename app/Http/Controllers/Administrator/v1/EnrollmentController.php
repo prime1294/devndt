@@ -29,6 +29,8 @@ class EnrollmentController extends Controller
     public function enrollment(Request $request) {
         $user = Sentinel::getUser();
         $data['cerificate'] = Cource::where('status',1)->orderBy('id','ASC')->get();
+        $data['company_list'] = Company::select('id','company_name')->where('status',1)->orderBy('id','DESC')->get();
+        $data['ref_list'] = Ref::select('id','fname','lname')->where('status',1)->orderBy('id','DESC')->get();
         return view('admin.v1.enrollment.list',$data);
     }
 
@@ -233,15 +235,14 @@ class EnrollmentController extends Controller
         if(request('search_by_name')) {
             $list->whereRaw("CONCAT(front_fname,' ',front_mname,' ',front_lname) LIKE '%".request('search_by_name')."%'");
         }
-        if(request('search_by_contact')) {
-            $q = request('search_by_contact');
-            $list->where(function($query) use ($q) {
-                $query->where('contact', 'LIKE', '%'.$q.'%')
-                    ->orWhere('alt_contact', 'LIKE', '%'.$q.'%');
-            });
+        if(request('ref_id')) {
+            $list->where('ref_id',request('ref_id'));
         }
-        if(request('search_by_email')) {
-            $list->where('email','LIKE', '%'.request('search_by_email').'%');
+        if(request('creation')) {
+            $list->where('creation',request('creation'));
+        }
+        if(request('company_id')) {
+            $list->where('company_id',request('company_id'));
         }
         if(request('certificate_no')) {
             $list->whereRaw("FIND_IN_SET(".request('certificate_no').", certificates) > 0");
@@ -271,12 +272,25 @@ class EnrollmentController extends Controller
                 $ref_name = '';
             }
 
+            //check type
+            $ctype = "Unknown";
+            if($row->creation == 1) {
+                $ctype = "New";
+            } else if($row->creation == 2) {
+                $ctype = "Other";
+            } else if($row->creation == 3) {
+                $ctype = "Renew";
+            } else {
+                $ctype = "Unknown";
+            }
+
             $alt_contact = $row->alt_contact ? ', '.$row->alt_contact : '';
             $child = [
                 "id" => $row->id,
                 "name" => $row->front_fname.' '.$row->front_mname.' '.$row->front_lname,
                 "photo" => $row->photo,
                 "certificate" => $certificateShortName,
+                "ctype" => $ctype,
                 "contact" => $row->contact.$alt_contact,
                 "email" => $row->email,
                 "company" => $company_name,
@@ -303,6 +317,7 @@ class EnrollmentController extends Controller
         })
         ->addColumn('certificate_info', function ($enrollment) {
             $html = $enrollment['certificate'];
+            $html .= '<br><span class="text-muted">'.$enrollment['ctype'].'</span>';
             return $html;
         })
         ->addColumn('contact_info', function ($enrollment) {
@@ -598,7 +613,7 @@ class EnrollmentController extends Controller
     }
     
     public static function getCertificateInfo($cid) {
-        $result = Ecertificate::select('enrollment_certificate.*','cource.name as counce_name','cource.short_name as short_name','cource.trainning_hours')
+        $result = Ecertificate::select('enrollment_certificate.*','cource.name as counce_name','cource.short_name as short_name','cource.level1_hours','cource.level2_hours','cource.min_exp_hours_1','cource.min_exp_hours_2')
             ->leftJoin('cource', 'enrollment_certificate.cource_id', '=', 'cource.id')
             ->where('enrollment_certificate.id',$cid)
             ->first();
@@ -607,7 +622,7 @@ class EnrollmentController extends Controller
     }
 
     public static function getCertificateDetails($enrollment_id,$cource_id) {
-        $result = Ecertificate::select('enrollment_certificate.*','cource.name as counce_name','cource.short_name','cource.trainning_hours')
+        $result = Ecertificate::select('enrollment_certificate.*','cource.name as counce_name','cource.short_name','cource.level1_hours','cource.level2_hours','cource.min_exp_hours_1','cource.min_exp_hours_2')
             ->leftJoin('cource', 'enrollment_certificate.cource_id', '=', 'cource.id')
             ->where('enrollment_certificate.enrollment_id',$enrollment_id)
             ->where('enrollment_certificate.cource_id',$cource_id)

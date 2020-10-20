@@ -1,16 +1,17 @@
-@extends('admin.v1.layout.app', ['title' => 'Invoice'])
+@extends('admin.v1.layout.app', ['title' => $invoice_print_id])
 
 @section('content')
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-trello"></i> Invoice
-            <small>Manage Invoices</small>
+            <i class="fa fa-trello"></i> {{ $invoice_print_id }}
+            <small>Manage Services</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('user.dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Invoice</li>
+            <li><a href="{{ route('invoice')}}">Invoice</a></li>
+            <li class="active">Services</li>
         </ol>
     </section>
 
@@ -23,8 +24,8 @@
                         <table class="table table-hover table-striped table-bordered dtable">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Information</th>
+                                <th>Charge For</th>
+                                <th>Quotation Number</th>
                                 <th>Total</th>
                                 <th>Action</th>
                             </tr>
@@ -41,8 +42,8 @@
 </section>
 
 <div class="buy-now">
-    <a href="{{ route('new.invoice') }}" class="btn btn-primary buy-now-btn">
-        <i class="fa fa-plus" aria-hidden="true"></i>
+    <a href="{{ route('invoice') }}" class="btn btn-primary buy-now-btn">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
     </a>
     <div class="ripple"></div>
 </div>
@@ -68,13 +69,14 @@
             "processing" : true,
             "serverSide" : true,
             "bAutoWidth": false,
+            "searching": false,
             "pageLength": 20,
-            "ajax" : "{{ route('invoice.list.ajax') }}",
+            "ajax" : "{{ route('service.list.ajax',$info->id) }}",
             "columns" : [
-                {"data":"invoice_info","sWidth": "10%","orderable": false},
-                {"data":"user_info","sWidth": "55%","orderable": false},
-                {"data":"grand_total_info","sWidth": "10%","orderable": false},
-                {"data":"action","sWidth": "25%","searchable": false , "orderable": false}
+                {"data":"charge_info","sWidth": "35%","orderable": false},
+                {"data":"quote_info","sWidth": "30%","orderable": false},
+                {"data":"total_info","sWidth": "20%","orderable": false},
+                {"data":"action","sWidth": "15%","searchable": false , "orderable": false}
             ]
         });
     });

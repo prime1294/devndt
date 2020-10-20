@@ -94,8 +94,16 @@ Route::group(array('namespace' => 'Administrator\v1','middleware' => ['sentinel.
     //invoice
     Route::get('invoice', 'InvoiceController@invoice')->name('invoice');
     Route::get('new-invoice', 'InvoiceController@newInvoice')->name('new.invoice');
-    Route::post('register-invoice', 'InvoiceController@registerInvoice')->name('vision.register');
+    Route::get('edit-invoice/{id}', 'InvoiceController@editInvoice')->name('edit.invoice');
+    Route::post('register-invoice', 'InvoiceController@registerInvoice')->name('invoice.register');
+    Route::post('update-invoice/{id}', 'InvoiceController@updateInvoice')->name('invoice.update');
     Route::get('ajax-invoice-list', 'InvoiceController@getInvoiceList')->name('invoice.list.ajax');
+    Route::get('download-invoice/{id}', 'InvoiceController@invoicePdf')->name('invoice.pdf');
+    Route::get('invoice-services/{id}', 'InvoiceController@invoiceServices')->name('invoice.services');
+    Route::get('new-service/{id}', 'InvoiceController@newService')->name('new.invoice.service');
+    Route::post('register-service/{id}', 'InvoiceController@registerService')->name('invoice.register.service');
+    Route::get('ajax-service-list/{id}', 'InvoiceController@getServiceList')->name('service.list.ajax');
+    Route::get('delete-service/{id}/{invid}', 'InvoiceController@deleteService')->name('delete.service');
 
     //profile
     Route::get('profile', 'UserController@profile')->name('profile');

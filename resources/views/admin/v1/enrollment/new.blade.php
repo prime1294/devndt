@@ -38,6 +38,9 @@
 .hide_creation {
   display: none;
 }
+  .special_container {
+    display: none;
+  }
 </style>
 
 
@@ -67,11 +70,25 @@
               <div class="form-group method_div">
                 <?php
                 foreach($cource as $row) {
+                  if($row->is_other == 0) {
                   ?>
-                  <label class="lbl1">{{ $row->short_name }} &nbsp;<input type="checkbox" data-parent="{{ $row->short_name }}" id="method" name="certificates[]" data-fees="{{ intval($row->fees) }}" value="{{ $row->id }}" class="certificates form-control"></label>
+                  <label class="lbl1" title="{{ $row->name }}">{{ $row->short_name }} &nbsp;<input type="checkbox" data-parent="{{ $row->short_name }}" id="method" name="certificates[]" data-fees="{{ intval($row->fees) }}" value="{{ $row->id }}" class="certificates form-control"></label>
                 <?php
+                  }
                 }
                 ?>
+                <button type="button" class="btn btn-info btn-xs tglspecial" style="margin-bottom:0px; margin-left:10px;"><i class="fa fa-eye"></i> View Special</button>
+                <div class="special_container">
+                  <?php
+                  foreach($cource as $row) {
+                  if($row->is_other) {
+                  ?>
+                  <label class="lbl1" title="{{ $row->name }}">{{ $row->short_name }} &nbsp;<input type="checkbox" data-parent="{{ $row->short_name }}" id="method" name="certificates[]" data-fees="{{ intval($row->fees) }}" value="{{ $row->id }}" class="certificates form-control"></label>
+                  <?php
+                  }
+                  }
+                  ?>
+                </div>
               </div>
             </div>
             <div class="col-md-2">
@@ -768,6 +785,10 @@ $('input.chk_creation').on('ifChecked', function(event){
   } else {
     $(".hide_creation").hide();
   }
+});
+
+$(document).on("click",".tglspecial",function(e){
+  $(".special_container").stop().toggle();
 });
 </script>
 

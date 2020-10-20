@@ -10,12 +10,12 @@ class Admin {
         $types = [
            "1" => "NDT Certification",
            "2" => "Re-certification of NDT Certificate",
-           "3" => "Procedure Approval",
+           "3" => "NDT Procedure Approval",
            "4" => "Vision Acuity Test Certification",
-           "5" => "Consultancy Services",
+           "5" => "NDT Consultancy Services",
            "6" => "Welding Inspection",
            "7" => "NDT Testing Services",
-           "8" => "Written Practices",
+           "8" => "Written Practice",
         ];
 
         if($id) {

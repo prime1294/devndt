@@ -24,8 +24,7 @@
                                 <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Short Name</th>
-                                    <th>Training Hours</th>
+                                    <th>Cource Information</th>
                                     <th>Fees</th>
                                     <th>Renewal Fees</th>
                                     <th>Action</th>
@@ -70,19 +69,64 @@
                                     <input type="text" id="edit_short_name" name="short_name" class="form-control" value="">
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="edit_training_hour">Training Hours</label>
-                                    <input type="text" id="edit_training_hour" name="trainning_hours" class="form-control onlyint" value="">
+                                    <label for="edit_is_other">Cource Category</label>
+                                    <select style="width: 100%;" id="edit_is_other" name="is_other" class="form-control select2">
+                                        <option value="0">General</option>
+                                        <option value="1">Special</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="edit_avalible_services">Available Cource</label>
+                                    <select style="width: 100%;" id="edit_avalible_services" name="avalible_services" class="form-control select2">
+                                        <option value="I,II">Level I And II Both</option>
+                                        <option value="I">Level I Only</option>
+                                        <option value="II">Level II Only</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="edit_level1_hours">Training Hours Level I</label>
+                                    <input type="text" id="edit_level1_hours" name="level1_hours" class="form-control onlyint" value="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="edit_level2_hours">Training Hours Level II</label>
+                                    <input type="text" id="edit_level2_hours" name="level2_hours" class="form-control onlyint" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="edit_min_exp_hours_1">Min Experience Level I</label>
+                                    <input type="text" id="edit_min_exp_hours_1" name="min_exp_hours_1" class="form-control onlyint" value="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="edit_min_exp_hours_2">Min Experience Level II</label>
+                                    <input type="text" id="edit_min_exp_hours_2" name="min_exp_hours_2" class="form-control onlyint" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="edit_fees">Fees</label>
                                     <input type="text" id="edit_fees" name="fees" class="form-control onlyint" value="">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="edit_renewal_fees">Renewal Fees</label>
                                     <input type="text" id="edit_renewal_fees" name="renew_fees" class="form-control onlyint" value="">
@@ -120,10 +164,28 @@ function val_edit_type() {
         $("#edit_short_name").focus();
         return false;
     }
-    if($("#edit_training_hour").val() == "")
+    if($("#edit_level1_hours").val() == "")
     {
-        toastr.error("Please, Enter Training Hours");
-        $("#edit_training_hour").focus();
+        toastr.error("Please, Enter Training Hours Level I");
+        $("#edit_level1_hours").focus();
+        return false;
+    }
+    if($("#edit_level2_hours").val() == "")
+    {
+        toastr.error("Please, Enter Training Hours Level II");
+        $("#edit_level2_hours").focus();
+        return false;
+    }
+    if($("#edit_min_exp_hours_1").val() == "")
+    {
+        toastr.error("Please, Enter Minimum Experience hour of Level I");
+        $("#edit_min_exp_hours_1").focus();
+        return false;
+    }
+    if($("#edit_min_exp_hours_2").val() == "")
+    {
+        toastr.error("Please, Enter Minimum Experience hour of Level II");
+        $("#edit_min_exp_hours_2").focus();
         return false;
     }
     if($("#edit_fees").val() == "")
@@ -154,7 +216,12 @@ function getformelement(id)
                 $("#edit_unique_id").val(e.id);
                 $("#edit_cource_name").val(e.name);
                 $("#edit_short_name").val(e.short_name);
-                $("#edit_training_hour").val(e.trainning_hours);
+                $("#edit_is_other").val(e.is_other).trigger("change");
+                $("#edit_avalible_services").val(e.avalible_services).trigger("change");
+                $("#edit_level1_hours").val(e.level1_hours);
+                $("#edit_level2_hours").val(e.level2_hours);
+                $("#edit_min_exp_hours_1").val(e.min_exp_hours_1);
+                $("#edit_min_exp_hours_2").val(e.min_exp_hours_2);
                 $("#edit_fees").val(e.fees);
                 $("#edit_renewal_fees").val(e.renew_fees);
                 modaloverlay("#EditModal","hide");
@@ -192,12 +259,11 @@ $(document).ready(function() {
         "processing" : true,
         "serverSide" : true,
         "bAutoWidth": false,
-        "pageLength": 20,
+        "pageLength": 10,
         "ajax" : "{{ route('course.list.ajax') }}",
         "columns" : [
-            {"data":"name","sWidth": "30%","orderable": false},
-            {"data":"short_name","sWidth": "15%","orderable": false},
-            {"data":"trainning_hours","sWidth": "15%","orderable": false},
+            {"data":"cource_info","sWidth": "25%","orderable": false},
+            {"data":"cource_specification","sWidth": "35%","orderable": false},
             {"data":"fees","sWidth": "15%","orderable": false},
             {"data":"renew_fees","sWidth": "15%","orderable": false},
             {"data":"action","sWidth": "10%","searchable": false , "orderable": false}

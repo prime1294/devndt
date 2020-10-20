@@ -1,4 +1,4 @@
-@extends('admin.v1.layout.app', ['title' => 'Invoice'])
+@extends('admin.v1.layout.app', ['title' => 'Edit Invoice'])
 
 @section('content')
 <style type="text/css">
@@ -13,12 +13,13 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        <i class="fa fa-trello"></i> Invoice
-        <small>Add New Invoice</small>
+        <i class="fa fa-trello"></i> Edit Invoice
+        <small>Edit Invoice</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('user.dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Invoice</li>
+        <li><a href="{{ route('invoice')}}">Invoice</a></li>
+        <li class="active">Edit Invoice</li>
 
     </ol>
 </section>
@@ -28,19 +29,13 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-body">
-                    <form method="post" action="{{ route('invoice.register') }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('invoice.update',$info->id) }}" enctype="multipart/form-data">
                         {!! csrf_field() !!}
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="invoice_number">Invoice No.</label>
-                                    <input type="text" id="invoice_number" name="invoice_number" value="{{ $max_id }}" readonly  class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
                                     <label for="invoice_date">Invoice Date</label>
-                                    <input type="text" id="invoice_date" name="invoice_date" class="form-control datepicker">
+                                    <input type="text" id="invoice_date" name="invoice_date" value="{{ date('d-m-Y',strtotime($info->invoice_date)) }}" class="form-control datepicker">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -49,7 +44,7 @@
                                     <select  style="width: 100%;" id="enrollment_id" name="enrollment_id" class="form-control select2">
                                         <option value="">Find By Id</option>
                                         @foreach($enrollment_list as $row)
-                                            <option value="{{ $row->id }}">{{ $row->id }} - {{ $row->front_fname.' '.$row->front_lname }}</option>
+                                            <option value="{{ $row->id }}" {{ $row->id == $info->enrollment_id ? "selected" : "" }}>{{ $row->id }} - {{ $row->front_fname.' '.$row->front_lname }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -60,7 +55,7 @@
                                     <select  style="width: 100%;" id="company_id" name="company_id" class="form-control select2">
                                         <option value="">Find By Id</option>
                                         @foreach($company_list as $row)
-                                            <option value="{{ $row->id }}">{{ $row->id }} - {{ $row->company_name }}</option>
+                                            <option value="{{ $row->id }}" {{ $row->id == $info->company_id ? "selected" : "" }}>{{ $row->id }} - {{ $row->company_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -71,13 +66,13 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="invoice_name">Full Name</label>
-                                    <input type="text" id="invoice_name" name="invoice_name" placeholder="Baldev Patel" value="" class="form-control">
+                                    <input type="text" id="invoice_name" name="invoice_name" placeholder="Baldev Patel" value="{{ $info->invoice_name }}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="invoice_address">Address</label>
-                                    <input type="text" id="invoice_address" name="invoice_address" placeholder="Ahmedabad - 382345" value="" class="form-control">
+                                    <input type="text" id="invoice_address" name="invoice_address" placeholder="Ahmedabad - 382345" value="{{ $info->invoice_address }}" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -103,7 +98,7 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-       initdatepicker(true);
+       initdatepicker(false);
         $('.custom-editor').wysihtml5({
             toolbar: {
                 "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true

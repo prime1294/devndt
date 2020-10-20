@@ -34,6 +34,9 @@
 .hideme {
   display:none;
 }
+.special_container {
+  display: none;
+}
 </style>
 
 @inject('enrollment_controller', 'App\Http\Controllers\Administrator\v1\EnrollmentController')
@@ -64,12 +67,27 @@
                 <?php
                  $certificate_list = explode(',',$info->certificates);
                 foreach($cource as $row) {
+                if($row->is_other == 0) {
                   $is_chk = in_array($row->id, $certificate_list) ? "checked" : "";
                   ?>
                   <label class="lbl1">{{ $row->short_name }} &nbsp;<input type="checkbox" data-parent="{{ $row->short_name }}" id="method" name="certificates[]" data-fees="{{ $info->creation == 3 ? intval($row->renew_fees) : intval($row->fees) }}" value="{{ $row->id }}" {{ $is_chk }} class="certificates form-control"></label>
                 <?php
                 }
+                }
                 ?>
+                <button type="button" class="btn btn-info btn-xs tglspecial" style="margin-bottom:0px; margin-left:10px;"><i class="fa fa-eye"></i> View Special</button>
+                <div class="special_container">
+                  <?php
+                  foreach($cource as $row) {
+                  if($row->is_other) {
+                  $is_chk = in_array($row->id, $certificate_list) ? "checked" : "";
+                  ?>
+                  <label class="lbl1">{{ $row->short_name }} &nbsp;<input type="checkbox" data-parent="{{ $row->short_name }}" id="method" name="certificates[]" data-fees="{{ $info->creation == 3 ? intval($row->renew_fees) : intval($row->fees) }}" value="{{ $row->id }}" {{ $is_chk }} class="certificates form-control"></label>
+                  <?php
+                  }
+                  }
+                  ?>
+                </div>
               </div>
             </div>
             <div class="col-md-2">
@@ -824,6 +842,10 @@ $('input.certificates').on('ifUnchecked', function (event) {
   //hide block
   var cname = $(this).attr('data-parent');
   $("#"+cname+"_holder").hide();
+});
+
+$(document).on("click",".tglspecial",function(e){
+  $(".special_container").stop().toggle();
 });
 </script>
 

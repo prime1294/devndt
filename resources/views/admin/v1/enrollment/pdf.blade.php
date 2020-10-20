@@ -429,7 +429,7 @@ $user = Sentinel::check();
         <tr>
             <td>Experience ( NDT )</td>
             <td>:</td>
-            <td colspan="2">{{ $info->exp_hour }} {{ $info->exp_hour <= 1 ? substr(strtolower($info->exp_type),0,-1) : strtolower($info->exp_type) }}</td>
+            <td colspan="2">{{ $info->exp_hour }} {{ $info->exp_hour <= 1 ? substr(strtolower($info->exp_type),0,-1) : strtolower($info->exp_type) }}  ( > {{ $info->ndt_level == 'I' ? $cinfo->min_exp_hours_1 : $cinfo->min_exp_hours_2 }} hours)</td>
         </tr>
         <tr>
             <td>Near Vision Acuity</td>
@@ -445,7 +445,7 @@ $user = Sentinel::check();
         <tr>
             <td>Total Training Hours</td>
             <td>:</td>
-            <td colspan="2">{{ $cinfo->trainning_hours }}</td>
+            <td colspan="2">{{ $info->ndt_level == 'I' ? $cinfo->level1_hours : $cinfo->level2_hours }}</td>
         </tr>
         @endif
         @if($info->creation == 2 || $info->creation == 3)
